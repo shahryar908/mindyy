@@ -32,11 +32,11 @@ export default function ForgotPasswordPage() {
     <>
       <TopNav />
       <AuthCard>
-        <header className="mb-12 text-center md:text-left">
-          <h1 className="font-display mb-4 text-[32px] leading-[40px] md:text-[48px] md:leading-[56px] font-semibold text-primary">
+        <header className="mb-5 text-center md:text-left">
+          <h1 className="font-display mb-1 text-[26px] leading-[32px] md:text-[32px] md:leading-[38px] font-semibold text-primary">
             Reset your password
           </h1>
-          <p className="text-base text-secondary opacity-70">
+          <p className="text-sm text-secondary opacity-70">
             Enter your email and we&apos;ll send a reset link.
           </p>
         </header>
@@ -47,7 +47,7 @@ export default function ForgotPasswordPage() {
             its way.
           </p>
         ) : (
-          <form onSubmit={onSubmit} className="space-y-10">
+          <form onSubmit={onSubmit} className="space-y-4">
             <FormField
               id="email"
               label="Email Address"
@@ -63,7 +63,7 @@ export default function ForgotPasswordPage() {
                 {error}
               </p>
             )}
-            <div className="pt-4">
+            <div className="pt-1">
               <PrimaryButton type="submit" disabled={loading}>
                 {loading ? "Sending…" : "Send Reset Link"}
               </PrimaryButton>
@@ -71,7 +71,7 @@ export default function ForgotPasswordPage() {
           </form>
         )}
 
-        <footer className="mt-12 border-t border-surface-container pt-8 text-center">
+        <footer className="mt-4 border-t border-surface-container pt-4 text-center">
           <Link href="/sign-in" className="font-label text-secondary underline-offset-8 hover:text-primary hover:underline">
             Back to Sign In
           </Link>

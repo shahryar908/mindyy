@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: mindyy
+      POSTGRES_PASSWORD: mindyy
+      POSTGRES_DB: mindyy
+    ports:
+      - "5432:5432"
+    volumes:
+      - mindyy_pg:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  mindyy_pg:

@@ -14,6 +14,8 @@ from slowapi.errors import RateLimitExceeded  # noqa: E402
 from db import init_db  # noqa: E402
 from rate_limit import limiter  # noqa: E402
 from auth.routes import router as auth_router  # noqa: E402
+from photos.routes import router as photos_router  # noqa: E402
+from chat.routes import router as chat_router  # noqa: E402
 
 
 @asynccontextmanager
@@ -36,6 +38,8 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+app.include_router(photos_router)
+app.include_router(chat_router)
 
 
 @app.get("/")

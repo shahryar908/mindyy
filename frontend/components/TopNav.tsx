@@ -12,10 +12,10 @@ export function TopNav() {
 
   return (
     <nav className="fixed top-0 z-50 w-full border-none bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between px-5 py-8 md:px-margin-desktop md:py-10">
+      <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between px-5 py-3 md:px-margin-desktop md:py-3">
         <Link
           href="/"
-          className="font-display text-[32px] font-medium leading-[40px] tracking-tighter text-primary"
+          className="font-display text-[22px] font-medium leading-[28px] tracking-tighter text-primary"
         >
           MINDY
         </Link>

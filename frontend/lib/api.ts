@@ -1,3 +1,12 @@
+import type {
+  FaceCluster,
+  PhotoFilters,
+  PhotoListResponse,
+  PhotoStatusResponse,
+  Photo,
+  UploadResponse,
+} from "./types";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export type TokenPair = {
@@ -76,6 +85,10 @@ async function request<T>(
       return request<T>(path, { ...options, retry: false });
     }
     tokenStore.clear();
+    if (typeof window !== "undefined" && !window.location.pathname.startsWith("/sign-in")) {
+      const next = encodeURIComponent(window.location.pathname + window.location.search);
+      window.location.href = `/sign-in?reason=expired&next=${next}`;
+    }
   }
 
   if (!res.ok) throw await parseError(res);
@@ -143,4 +156,51 @@ export const api = {
   me: () => request<UserRead>("/auth/me", { auth: true }),
 
   googleLoginUrl: () => `${API_URL}/auth/google/login`,
+
+  listPhotos: (params: { limit?: number; cursor?: string; cluster_id?: string } = {}) => {
+    const q = new URLSearchParams();
+    if (params.limit) q.set("limit", String(params.limit));
+    if (params.cursor) q.set("cursor", params.cursor);
+    if (params.cluster_id) q.set("cluster_id", params.cluster_id);
+    const qs = q.toString();
+    return request<PhotoListResponse>(`/photos${qs ? `?${qs}` : ""}`, { auth: true });
+  },
+
+  getPhoto: (id: string) => request<Photo>(`/photos/${id}`, { auth: true }),
+
+  getPhotoStatus: (id: string) =>
+    request<PhotoStatusResponse>(`/photos/${id}/status`, { auth: true }),
+
+  deletePhoto: (id: string) =>
+    request<void>(`/photos/${id}`, { method: "DELETE", auth: true }),
+
+  uploadPhoto: async (file: File): Promise<UploadResponse> => {
+    const token = tokenStore.getAccess();
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch(`${API_URL}/photos/upload`, {
+      method: "POST",
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      body: form,
+    });
+    if (!res.ok) throw await parseError(res);
+    return (await res.json()) as UploadResponse;
+  },
+
+  listPeople: () => request<FaceCluster[]>("/photos/people", { auth: true }),
+
+  labelPerson: (cluster_id: string, label: string) =>
+    request<FaceCluster>(`/photos/people/${cluster_id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ label }),
+      auth: true,
+    }),
+
+  chatStreamUrl: () => `${API_URL}/chat`,
+
+  filtersToQuery: (f: PhotoFilters): string => {
+    const q = new URLSearchParams();
+    if (f.cluster_id) q.set("cluster_id", f.cluster_id);
+    return q.toString();
+  },
 };

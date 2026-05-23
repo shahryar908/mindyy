@@ -8,3 +8,17 @@ wheels/
 
 # Virtual environments
 .venv
+.env
+.env.local
+
+# Local DB
+*.db
+*.sqlite
+*.sqlite3
+
+# Local uploads (only used if S3 is bypassed)
+uploads/
+
+# Temp scripts
+_smoketest.py
+_check_tables.py

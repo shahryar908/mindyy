@@ -37,16 +37,16 @@ export default function SignInPage() {
     <>
       <TopNav />
       <AuthCard>
-        <header className="mb-12 text-center md:text-left">
-          <h1 className="font-display mb-4 text-[32px] leading-[40px] md:text-[48px] md:leading-[56px] font-semibold text-primary">
+        <header className="mb-5 text-center md:text-left">
+          <h1 className="font-display mb-1 text-[26px] leading-[32px] md:text-[32px] md:leading-[38px] font-semibold text-primary">
             Welcome Back
           </h1>
-          <p className="text-base text-secondary opacity-70">
-            Enter your credentials to access your digital workspace.
+          <p className="text-sm text-secondary opacity-70">
+            Sign in to access your workspace.
           </p>
         </header>
 
-        <form onSubmit={onSubmit} className="space-y-10">
+        <form onSubmit={onSubmit} className="space-y-4">
           <FormField
             id="email"
             label="Email Address"
@@ -82,24 +82,24 @@ export default function SignInPage() {
             </p>
           )}
 
-          <div className="pt-4">
+          <div className="pt-1">
             <PrimaryButton type="submit" disabled={loading}>
               {loading ? "Signing in…" : "Sign In"}
             </PrimaryButton>
           </div>
         </form>
 
-        <div className="mt-8">
+        <div className="mt-3">
           <a
             href={api.googleLoginUrl()}
-            className="font-label flex w-full items-center justify-center rounded-full border border-outline-variant py-5 uppercase tracking-[0.2em] text-primary transition-colors hover:bg-surface-container-low"
+            className="font-label flex w-full items-center justify-center rounded-full border border-outline-variant py-3 uppercase tracking-[0.2em] text-primary transition-colors hover:bg-surface-container-low"
           >
             Continue with Google
           </a>
         </div>
 
-        <footer className="mt-12 border-t border-surface-container pt-8 text-center">
-          <p className="text-base text-secondary">
+        <footer className="mt-4 border-t border-surface-container pt-4 text-center">
+          <p className="text-sm text-secondary">
             New to MINDY?
             <Link href="/sign-up" className="ml-2 font-bold text-primary underline-offset-8 hover:underline">
               Sign Up
